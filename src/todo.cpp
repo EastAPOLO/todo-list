@@ -1,6 +1,5 @@
 #include <sstream>
 #include <iostream>
-#include <algorithm>
 #include "todo.hpp"
 
 int get_last_priority(std::ifstream& input){
