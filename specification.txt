@@ -1,0 +1,10 @@
+n = todo priority
+... = todo text
+@label = optional category label
+x = finished todo
+
+[n] ... @label
+[n] ...
+[x] ... @label
+[x] ...
+
