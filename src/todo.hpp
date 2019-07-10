@@ -8,4 +8,6 @@ struct Todo {
     std::string buffer;
 };
 
+void add_tasks(std::ofstream&, Todo&, int&);
+
 int get_last_priority(std::ifstream&);

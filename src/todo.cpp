@@ -2,6 +2,15 @@
 #include <iostream>
 #include "todo.hpp"
 
+void add_tasks(std::ofstream& output, Todo& t, int& count){
+    while(std::getline(std::cin, t.buffer)){
+        std::istringstream in(t.buffer);
+        t.priority = count;
+        output << '[' << t.priority << ']' << " " << t.buffer << std::endl;
+        ++count;
+    }
+}
+
 int get_last_priority(std::ifstream& input){
     std::string line;
     std::string temp;

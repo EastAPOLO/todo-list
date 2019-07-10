@@ -14,12 +14,7 @@ int main(){
         count = last_priority + 1;
     }
 
-    while(std::getline(std::cin, t.buffer)){
-        std::istringstream in(t.buffer);
-        t.priority = count;
-        output << '[' << t.priority << ']' << " " << t.buffer << std::endl;
-        ++count;
-    }
+    add_tasks(output, t, count);
 
     return 0;
 }
