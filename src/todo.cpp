@@ -1,20 +1,11 @@
 #include <sstream>
 #include <iostream>
+#include <cctype>
 #include "todo.hpp"
 
-void add_tasks(std::ofstream& output, Todo& t, int& count){
-    while(std::getline(std::cin, t.buffer)){
-        std::istringstream in(t.buffer);
-        t.priority = count;
-        output << '[' << t.priority << ']' << " " << t.buffer << std::endl;
-        ++count;
-    }
-}
-
-int get_last_priority(std::ifstream& input){
+int Todo::get_last_priority(std::ifstream& input){
     std::string line;
     std::string temp;
-    int priority;
 
     while(std::getline(input, line)){
         std::istringstream in(line);
@@ -25,10 +16,11 @@ int get_last_priority(std::ifstream& input){
         return 0;
     }
 
-    for(int i = 0; i < temp.size(); ++i){
-        if(temp[i] == '[' || temp[i] == ']'){
-            temp[i] = ' ';
-        }
+    if(!isdigit(temp[0]) && !isdigit(temp[temp.size() - 1])){
+        temp[0] = ' ';
+        temp[temp.size() - 1] = ' ';
+    }else{
+        return priority;
     }
 
     priority = std::stoi(temp);
@@ -36,3 +28,11 @@ int get_last_priority(std::ifstream& input){
     return priority;
 }
 
+void Todo::add_tasks(std::ofstream& output, std::ifstream& input){
+    priority = get_last_priority(input) + 1;
+    while(std::getline(std::cin, buffer)){
+        std::istringstream in(buffer);
+        output << '[' << priority << ']' << " " << buffer << std::endl;
+        ++priority;
+    }
+}

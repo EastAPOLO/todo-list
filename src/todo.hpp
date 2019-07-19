@@ -1,13 +1,14 @@
 #pragma once
 #include <fstream>
 
-struct Todo {
-    int priority;
-    std::string todo;
-    std::string label;
-    std::string buffer;
+class Todo {
+public:
+    int get_last_priority(std::ifstream&);
+    void add_tasks(std::ofstream&, std::ifstream&);
+private:
+    int priority{1};
+    std::string todo{""};
+    std::string label{""};
+    std::string buffer{""};
 };
 
-void add_tasks(std::ofstream&, Todo&, int&);
-
-int get_last_priority(std::ifstream&);
