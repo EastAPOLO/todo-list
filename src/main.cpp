@@ -1,6 +1,6 @@
 #include "todo.hpp"
 
-int main(){ 
+int main() {
     std::string rel_path = "../todo.txt";
     std::ofstream output(rel_path, std::ios::app);
     std::ifstream input(rel_path);

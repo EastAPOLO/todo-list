@@ -5,10 +5,10 @@ class Todo {
 public:
     int get_last_priority(std::ifstream&);
     void add_tasks(std::ofstream&, std::ifstream&);
+
 private:
-    int priority{1};
+    unsigned int priority{1};
     std::string todo{""};
-    std::string label{""};
+    std::string label{""};  // Assumption is made that @label is optional
     std::string buffer{""};
 };
-
