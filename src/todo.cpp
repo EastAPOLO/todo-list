@@ -1,13 +1,14 @@
-#include "todo.hpp"
 #include <iostream>
 #include <sstream>
+#include "todo.hpp"
 
-int Todo::get_last_priority(std::ifstream& input) {
-    std::string line;
+Todo::Todo(std::string& path) : output(path, std::ios::app), input(path) {}
+
+int Todo::get_last_priority() {
     std::string temp;
 
-    while (std::getline(input, line)) {
-        std::istringstream in(line);
+    while (std::getline(input, buffer)) {
+        std::istringstream in(buffer);
         in >> temp;
     }
 
@@ -26,15 +27,11 @@ int Todo::get_last_priority(std::ifstream& input) {
     return priority;
 }
 
-void Todo::add_tasks(std::ofstream& output, std::ifstream& input) {
-    priority = get_last_priority(input);
+void Todo::add_tasks() {
+    priority = get_last_priority() + 1;
 
-    /* If file has a priority greater than 1, increment to avoid a duplicate. */
-    if (priority > 1) {
-        priority++;
-    }
-    while (std::getline(std::cin, buffer)) {
-        std::size_t label_pos = buffer.find("@");
+    while (std::getline(std::cin >> std::ws, buffer)) {
+        std::size_t label_pos = buffer.find('@');
         if (std::string::npos != label_pos) {
             todo = buffer.substr(0, label_pos - 1);
             label = buffer.substr(label_pos);
@@ -45,5 +42,11 @@ void Todo::add_tasks(std::ofstream& output, std::ifstream& input) {
             output << '[' << priority << ']' << " " << todo << std::endl;
         }
         ++priority;
+    }
+}
+
+void Todo::list_tasks(){
+    while(std::getline(input, buffer)){
+        std::cout << buffer << '\n';
     }
 }

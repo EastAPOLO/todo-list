@@ -1,11 +1,27 @@
+#include <iostream>
 #include "todo.hpp"
+
+constexpr char quit = 'q';
+constexpr char add = 'a';
+constexpr char list = 'l';
 
 int main() {
     std::string rel_path = "../todo.txt";
-    std::ofstream output(rel_path, std::ios::app);
-    std::ifstream input(rel_path);
-    Todo t;
-    t.add_tasks(output, input);
+    char mode_char; 
+
+    while(std::cin >> mode_char){
+        Todo t{rel_path};
+        switch(mode_char){
+        case add:
+            t.add_tasks();
+            break;
+        case list:
+            t.list_tasks();
+            break;
+        default:
+            break;
+        }
+    }
 
     return 0;
 }
