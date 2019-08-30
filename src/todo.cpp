@@ -5,26 +5,40 @@
 Todo::Todo(std::string& path) : output(path, std::ios::app), input(path) {}
 
 int Todo::get_last_priority() {
-    std::string temp;
+    buffer = read_stream();
 
-    while (std::getline(input, buffer)) {
-        std::istringstream in(buffer);
-        in >> temp;
-    }
-
-    if (temp == "") {
+    if (buffer == "") {
         return Todo::priority;
     }
 
-    for(char& c : temp){
+    std::size_t newline = buffer.find_last_of('\n');
+    std::string last_line = buffer.substr(newline + 1);
+
+    std::istringstream in(last_line);
+    in >> buffer;
+
+    for(char& c : buffer){
         if(!isdigit(c)){
             c = ' ';
         }
     }
 
-    priority = std::stoi(temp);
+    priority = std::stoi(buffer);
 
     return priority;
+}
+
+std::string Todo::read_stream(){
+    std::string temp = "";
+    while(std::getline(input, buffer)){
+        if(buffer != ""){
+            temp += buffer + '\n';
+        }
+    }
+    if(temp[temp.size() - 1 == '\n']){
+        temp[temp.size() - 1] = ' ';
+    }
+    return temp;
 }
 
 void Todo::add_tasks() {
@@ -46,7 +60,6 @@ void Todo::add_tasks() {
 }
 
 void Todo::list_tasks(){
-    while(std::getline(input, buffer)){
-        std::cout << buffer << '\n';
-    }
+    buffer = read_stream();
+    std::cout << buffer << '\n';
 }

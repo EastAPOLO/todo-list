@@ -1,10 +1,12 @@
 #pragma once
 #include <fstream>
+#include <vector>
 
 class Todo {
 public:
     Todo(std::string&);
     int get_last_priority();
+    std::string read_stream();
     void add_tasks();
     void list_tasks();
 
